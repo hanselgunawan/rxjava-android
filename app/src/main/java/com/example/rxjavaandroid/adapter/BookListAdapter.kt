@@ -22,13 +22,13 @@ class BookListAdapter : RecyclerView.Adapter<BookListAdapter.MyViewHolder>() {
 		private val thumbImage: ImageView = view.findViewById(R.id.thumbImageView)
 
 		fun bind(data : VolumeInfo) {
-			tvTitle.text = data.volumeInfo.title
-			tvPublisher.text = data.volumeInfo.publisher
-			tvDesc.text = data.volumeInfo.description
+			tvTitle.text = data.volumeInfo?.title
+			tvPublisher.text = data.volumeInfo?.publisher
+			tvDesc.text = data.volumeInfo?.description
 
-			val url = data.volumeInfo.imageLinks.smallThumbnail
+			val url = data.volumeInfo?.imageLinks?.smallThumbnail
 
-			Glide.with(thumbImage)
+			Glide.with(thumbImage.context)
 				.load(url)
 				.circleCrop()
 				.into(thumbImage)
