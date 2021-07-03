@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
+import com.example.rxjavaandroid.adapter.BookListAdapter
 import com.example.rxjavaandroid.databinding.ActivityMainBinding
 import com.example.rxjavaandroid.viewmodel.MainActivityViewModel
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
 
 	lateinit var viewModel: MainActivityViewModel
+	lateinit var bookListAdapter: BookListAdapter
 	private lateinit var binding: ActivityMainBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +50,8 @@ class MainActivity : AppCompatActivity() {
 			val layoutManager = LinearLayoutManager(this@MainActivity)
 			val decoration = DividerItemDecoration(applicationContext, VERTICAL)
 			addItemDecoration(decoration)
-
-			adapter =
+			bookListAdapter = BookListAdapter()
+			adapter = bookListAdapter
 		}
 	}
 
@@ -58,6 +60,8 @@ class MainActivity : AppCompatActivity() {
 		viewModel.getBookListObserver().observe(this, Observer { bookList ->
 			if (bookList != null) {
 				// update adapter
+				bookListAdapter.bookListData = bookList.items
+				bookListAdapter.notifyDataSetChanged()
 			} else {
 				Toast.makeText(this, "Error in fetching data", Toast.LENGTH_SHORT).show()
 			}
